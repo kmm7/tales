@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Список сказок</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 40px;
+        }
+
+        .link-button {
+            display: block;
+            width: 100%;
+            max-width: 500px;
+            margin: 15px 0;
+            padding: 15px 20px;
+            background-color: #2d7ef7;
+            color: white;
+            text-align: left;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .link-button:hover {
+            background-color: #1c64d9;
+        }
+
+        .description {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="links"></div>
+
+    <script>
+        fetch('links.json')
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById('links');
+
+                data.forEach(item => {
+                    const button = document.createElement('button');
+                    button.className = 'link-button';
+                    button.innerHTML = `<div class="description">${item.description}</div>`;
+
+                    button.onclick = () => {
+                        window.open(item.url, '_blank');
+                    };
+
+                    container.appendChild(button);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading links:', error);
+            });
+    </script>
+
+</body>
+</html>
